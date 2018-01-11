@@ -1,0 +1,55 @@
+BSTOBJS = test-bst.o
+MATILDAOBJS = real.o string.o da.o cda.o queue.o stack.o scanner.o matilda.o process.o bst.o -lm
+OOPTS = -Wall -std=c99 -c -g
+LOOPTS = -Wall -std=c99 -g
+
+all : matilda test-bst
+
+matilda : $(MATILDAOBJS)
+	gcc $(LOOPTS) -o matilda $(MATILDAOBJS)
+
+test-bst : $(BSTOBJS)
+	gcc $(LOOPTS) -o test-bst $(BSTOBJS)
+
+
+real.o : real.c real.h
+	gcc $(OOPTS) real.c
+
+string.o : string.c string.h
+	gcc $(OOPTS) string.c
+
+da.o : da.c da.h
+	gcc $(OOPTS) da.c
+
+cda.o : cda.c cda.h
+	gcc $(OOPTS) cda.c
+
+queue.o : queue.c queue.h cda.h
+	gcc $(OOPTS) queue.c
+
+stack.o : stack.c stack.h da.h
+	gcc $(OOPTS) stack.c
+
+scanner.o : scanner.c scanner.h
+	gcc $(OOPTS) scanner.c
+
+process.o : process.c process.h
+	gcc $(OOPTS) process.c
+
+bst.o : bst.c bst.h
+	gcc $(OOPTS) bst.c
+
+matilda.o : matilda.c matilda.h bst.h string.h real.h queue.h stack.h cda.h da.h scanner.h process.h
+	gcc $(OOPTS) matilda.c
+
+test-bst.o : test-bst.c bst.h string.h real.h queue.h stack.h cda.h da.h
+	gcc $(OOPTS) test-bst.c
+
+test :
+	#testing bst#
+	./test-bst
+	@echo
+	@echo
+
+clean   :
+	rm -f *.o matilda test-bst
